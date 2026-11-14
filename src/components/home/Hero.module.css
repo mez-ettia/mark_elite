@@ -1,0 +1,182 @@
+/* Hero + ticker together fill the first screen, so the ticker is always above the fold. */
+.hero {
+  --ticker: 92px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  height: calc(100svh - var(--ticker));
+  min-height: 560px;
+  max-height: 1000px;
+  display: grid;
+  place-items: center;
+  padding: 80px var(--gutter) 40px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  z-index: -2;
+  filter: saturate(0.85) contrast(1.05);
+  animation: bgIn 3.2s var(--ease) both;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 50%, rgba(13, 13, 12, 0.55), rgba(13, 13, 12, 0.78)),
+    linear-gradient(180deg, rgba(13, 13, 12, 0.4) 0%, transparent 35%, transparent 65%, rgba(13, 13, 12, 0.85) 100%);
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(28px, 3.4vw, 48px);
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: min(8.2vw, 156px);
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.line {
+  display: inline-block;
+}
+
+.space {
+  display: inline-block;
+  width: 0.24em;
+}
+
+/* Each word clips its letters so they rise from behind a baseline */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.04em 0 0.02em;
+  vertical-align: bottom;
+}
+
+.letter {
+  display: inline-block;
+  animation: rise 1.05s var(--ease) both;
+  animation-delay: calc(0.35s + var(--i) * 0.055s);
+}
+
+/* PAINTING: Tiffany outline that is filled left → right like a roller */
+.paintWrap {
+  overflow: hidden;
+  padding: 0.04em 0 0.02em;
+  vertical-align: bottom;
+}
+
+.paint {
+  display: inline-block;
+  color: var(--color-accent);
+  animation: rise 1.1s var(--ease) 1.05s both;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .paint {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-accent);
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent)) no-repeat 0 0 / 0% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation:
+      rise 1.1s var(--ease) 1.05s both,
+      roll 1.1s cubic-bezier(0.65, 0, 0.35, 1) 1.9s forwards;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  animation: fadeUp 0.9s var(--ease) 2.5s both;
+}
+
+@keyframes bgIn {
+  from {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+    filter: blur(6px);
+  }
+  to {
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes roll {
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (max-width: 809px) {
+  .hero {
+    --ticker: 72px;
+  }
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 17vw;
+    line-height: 0.95;
+  }
+  .title > .space {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg,
+  .letter,
+  .paint,
+  .actions {
+    animation: none !important;
+  }
+  .paint {
+    color: var(--color-accent) !important;
+    background-size: 100% 100% !important;
+  }
+}

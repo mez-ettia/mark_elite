@@ -1,0 +1,40 @@
+.num {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-size: 52px;
+  line-height: 1;
+  color: #fff;
+}
+
+.col {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+/* Invisible copy of the final digit sets the column width, so a narrow "1" doesn't leave a gap. */
+.sizer {
+  visibility: hidden;
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -0.5em;
+  width: 1em;
+}
+
+.strip span {
+  display: block;
+  height: 1em;
+}
+
+.suffix {
+  white-space: pre;
+}

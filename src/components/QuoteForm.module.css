@@ -1,0 +1,99 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
+.grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid label > span {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.13px;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.half {
+  grid-column: span 2;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.grid input,
+.grid select,
+.grid textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 15px;
+  transition: border-color 0.25s var(--ease);
+}
+
+.grid input::placeholder,
+.grid textarea::placeholder {
+  color: rgba(156, 152, 140, 0.6);
+}
+
+.grid input:focus,
+.grid select:focus,
+.grid textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.grid textarea {
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.err {
+  font-size: 14px;
+  color: #ff9b8a;
+}
+
+.done {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+  padding: 40px 0;
+}
+
+@media (max-width: 1199px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 809px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .half {
+    grid-column: auto;
+  }
+}
